@@ -1,0 +1,194 @@
+/* === PAGE CONTAINER === */
+.page7-container {
+  position: relative;
+  min-height: 100vh;
+  background: url("/src/assets/page5bg.png") no-repeat center center fixed;
+  background-size: cover;
+  overflow: hidden;
+  font-family: "Comic Neue", cursive;
+  color: #3b4a37;
+}
+
+/* === HEADING === */
+.page7-heading {
+  position: absolute;
+  top: 0;
+  left: 3rem;
+  font-size: 3rem;
+  font-weight: 600;
+  color: #3b4a37;
+  line-height: 1.2;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  z-index: 10;
+}
+
+
+.envelope-wrapper {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 3;
+}
+
+.envelope-img {
+  width: 320px;
+  max-width: 70vw;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  opacity: 0.95;
+  position: relative;
+}
+
+
+.at-symbol {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  font-size: 4rem;
+  font-weight: bold;
+  color: #3b4a37;
+  animation: popIn 1.5s ease-out 0.3s forwards;
+}
+
+@keyframes popIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+
+.signin-section,
+.signup-section {
+  position: absolute;
+  top: 52%;
+  transform: translateY(-50%);
+  text-align: left;
+  font-family: "Caveat", "Patrick Hand", cursive;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: #3b4a37;
+  width: max-content;
+}
+
+
+.signin-section {
+  right: calc(50% + 170px + 1cm);
+}
+
+.signup-section {
+  left: calc(50% + 170px + 1cm);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.auth-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.auth-input {
+  width: 12rem;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(59, 74, 55, 0.35);
+  color: #3b4a37;
+  font-family: inherit;
+  font-size: 1.2rem;
+  padding: 0.1rem 0;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-bottom: 1px solid #3b4a37;
+}
+
+.auth-button {
+  margin-top: 0.4rem;
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: #3b4a37;
+  font-family: inherit;
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-button:hover,
+.auth-button:focus {
+  text-decoration: underline;
+}
+
+.auth-section-title {
+  margin: 0;
+}
+
+.auth-feedback {
+  font-size: 1rem;
+  line-height: 1.4rem;
+  margin: 0.4rem 0 0;
+}
+
+.auth-feedback-error {
+  color: #7d2b2b;
+}
+
+.auth-feedback-success {
+  color: #3b4a37;
+}
+
+
+@media (max-width: 768px) {
+  .page7-heading {
+    font-size: 2.4rem;
+    left: 2rem;
+  }
+
+  .envelope-img {
+    width: 240px;
+  }
+
+  .at-symbol {
+    font-size: 3rem;
+  }
+
+  .signin-section,
+  .signup-section {
+    font-size: 1.3rem;
+    line-height: 2rem;
+  }
+
+  .auth-input {
+    width: 10rem;
+    font-size: 1.1rem;
+  }
+
+  
+  .signin-section {
+    right: calc(50% + 130px + 0.8cm);
+  }
+
+  .signup-section {
+    left: calc(50% + 130px + 0.8cm);
+  }
+}

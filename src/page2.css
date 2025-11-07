@@ -1,0 +1,143 @@
+
+/* Base bubble style */
+.bubble {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease; 
+}
+.bubble:hover {
+  transform: scale(1.2); /* enlarge the whole bubble */
+  z-index: 20; /* make sure it appears above others */
+}
+
+.bubble img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+
+/* Text inside bubble */
+.bubble-text {
+  
+
+  position: absolute;
+  z-index: 10;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-family: "Comic Sans MS", cursive;
+
+}
+.bubble-text:hover{
+  transform: scale(1.2);
+}
+
+/* Bubble positions — spaced apart & lifted blue bubble */
+.activity {
+  top: 1%;          /* lifted slightly higher */
+  right: 30%;
+}
+
+.activity .bubble-text  {
+  color: #030e57;
+  left:60px;
+  font-weight:10;
+  text-decoration: underline;
+
+}
+.activity .bubble-text a {
+  color: #030e57;}
+
+.origin {
+  top: 45%;
+  left: 36%;
+}
+
+.origin .bubble-text {
+  top:90px;
+  font-weight: 10;
+  text-decoration: underline;
+
+}
+.origin .bubble-text a{
+    color: #050781;
+
+}
+
+.visibility {
+  top: 40%;
+  left: 5%;
+}
+
+.visibility .bubble-text {
+  
+  top: 230px;
+  font-weight: 10;
+}
+.visibility .bubble-text a{
+    color: #b40b0b;
+
+}
+
+.creativity {
+  bottom: 1%;
+  right: 2%;
+ 
+}
+
+.creativity .bubble-text {
+  color: rgb(36, 104, 36);
+  font-weight: 10;
+  font-weight:10;
+}
+.creativity .bubble-text a{
+  color: rgb(36, 104, 36);}
+
+/* Container for extra icons */
+.extra-icons {
+  position: relative; /* keeps them inside same layout area */
+  width: 100%;
+  height: 100%;
+}
+
+.statues-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;  /* adjust as per parent container */
+}
+
+/* Common statue style */
+.statue {
+  position: absolute;
+  height: 70px;       /* size of statue */
+  object-fit: contain;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Individual positioning – adjust freely */
+.statue1 {
+  top: 33%;
+  left: 68%;
+}
+
+.statue2 {
+  top: 48%;
+  left: 76%;
+}
+
+.statue3 {
+  top: 75%;
+  right: 75%;
+}
+
+
+.statue:hover {
+  transform: scale(1.5);
+}

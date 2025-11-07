@@ -1,0 +1,100 @@
+/* ---------- Container Setup ---------- */
+
+.content {
+  position: relative;
+  height: 100vh; /* overall layout height */
+}
+
+/* ---------- Common Section Styling ---------- */
+.section {
+  position: absolute;
+  width: 230px;
+  padding: 15px 20px;
+  transition: transform 0.3s ease;
+  text-align: center;
+}
+
+
+ 
+
+.section h3 {
+  font-size: 1.2rem;
+  color: rgb(4, 43, 4);
+  font-family: "Comic Neue", cursive;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.section img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* ---------- Individual Box Positions ---------- */
+
+/* COURSES SECTION */
+.courses {
+  display: flex;
+  flex-direction: row; /* text and image side by side */
+  align-items: flex-start; /* text thoda upar rahe */
+  justify-content: center;
+  gap: 2px;
+  top: 0;
+  right: 15%;
+  width: 400px;
+}
+
+.courses h3 {
+  margin: 0;
+  transform: translateY(-5px); /* slight upward shift */
+  text-align: left;
+  white-space: normal; /* allow 2-3 lines text */
+  line-height: 1.3;
+}
+
+/* image fix */
+.courses img {
+  width: 180px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* PROJECTS */
+.projects {
+  top: 150px;
+  left: 21%;
+}
+
+/* COMPETITIONS */
+.competitions {
+  top: 70px;
+  right: 35%;
+}
+
+/* CONFERENCES */
+.conferences {
+  top: 330px;
+  left: 0;
+}
+
+/* EVENTS */
+.events {
+  top: 310px;
+  left: 55%;
+}
+
+.events h3 {
+  transform: translateY(-10px);
+}
+
+/* ---------- Event Image Row ---------- */
+.events-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  width: 300px;
+}

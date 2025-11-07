@@ -1,0 +1,186 @@
+/* === PAGE 5 MAIN CONTAINER === */
+.page5-container {
+  position: relative;
+  min-height: 100vh;
+  background: url("/src/assets/page5bg.png") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  text-align: center;
+  font-family: "Comic Neue", "Caveat", "Patrick Hand", cursive;
+  color: #3b4a37;
+  overflow-x: hidden;
+  padding-bottom: 3rem;
+}
+
+/* === MAIN HEADING (SAME AS PAGE 6) === */
+.page5-heading {
+  position: absolute;
+  top: 0;             /* ✅ No space from top edge */
+  left: 3rem;         /* ✅ Same horizontal position as Page 6 */
+  font-size: 3rem;
+  font-weight: 600;
+  color: #3b4a37;     /* Olive green color */
+  line-height: 1.2;
+  text-align: left;
+  font-family: "Comic Neue", cursive;
+  white-space: pre-line;
+  margin: 0;          /* Remove default browser margin */
+  padding: 0;         /* Remove padding */
+  z-index: 10;        /* Make sure heading stays above leaves/background */
+}
+
+/* --- Responsive heading adjustments --- */
+@media (max-width: 768px) {
+  .page5-heading {
+    font-size: 2.3rem;
+    left: 2rem;
+    top: 0;
+  }
+}
+
+/* === FACULTY SECTION === */
+.faculty-section {
+  margin-top: 6rem; /* Push down below heading */
+}
+
+.faculty-title {
+  color: #1730c6;
+  font-size: 2.5rem;
+  text-decoration: underline;
+  font-family: "Brush Script MT", "Comic Neue", cursive;
+  margin-bottom: 1rem;
+}
+
+/* --- FACULTY GRID --- */
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.faculty-grid img {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #5a6b4f;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.faculty-grid img:hover {
+  transform: scale(1.08);
+}
+
+/* --- FACULTY CARD WRAPPER --- */
+.faculty-card {
+  position: relative;
+  display: inline-block;
+}
+
+/* --- INFO BOX ON HOVER --- */
+.info-box {
+  position: fixed;
+  top: 50%;
+  right: 3rem;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid #3b4a37;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  width: 230px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.info-box h3 {
+  margin: 0;
+  color: #1530c7;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.info-box p {
+  margin-top: 0.3rem;
+  color: #374832;
+  font-size: 1.6rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%);
+  }
+}
+
+/* === STUDENTS SECTION === */
+.students-section {
+  margin-top: 3rem;
+}
+
+.student-title {
+  color: #0d24bb;
+  font-size: 2.2rem;
+  text-decoration: underline;
+  font-weight: 800;
+}
+
+.students-section p {
+  font-size: 2rem;
+  color: #374832;
+  font-style: italic;
+  margin-top: 0.3rem;
+  font-weight: 600;
+}
+
+/* === ARTISTS SECTION === */
+.artists-section {
+  margin-top: 3rem;
+}
+
+.artist-title {
+  font-size: 2rem;
+  color: #3c4a34;
+  margin-bottom: 1rem;
+  font-weight: 800
+}
+
+.artist-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.artist-grid img {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  background: #dee9d8;
+  border: 3px solid #5c6b52;
+  object-fit: cover;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* === RESPONSIVE LAYOUT === */
+@media (max-width: 600px) {
+  .faculty-grid {
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  }
+
+  .artist-grid img {
+    width: 80px;
+    height: 80px;
+  }
+}

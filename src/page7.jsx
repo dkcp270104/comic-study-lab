@@ -1,0 +1,238 @@
+import React, { useState } from "react";
+import "./page7.css";
+import Bg from "./components/bg.jsx";
+import envelopeImage from "./assets/envelope.png"; 
+
+function Page7() {
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const [signInData, setSignInData] = useState({ email: "", password: "" });
+  const [signUpData, setSignUpData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    age: "",
+    gender: "",
+    country: "",
+  });
+  const [signInStatus, setSignInStatus] = useState(null);
+  const [signUpStatus, setSignUpStatus] = useState(null);
+
+  const handleSignInChange = (event) => {
+    const { name, value } = event.target;
+    setSignInData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSignUpChange = (event) => {
+    const { name, value } = event.target;
+    setSignUpData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleSignInSubmit = async (event) => {
+    event.preventDefault();
+    if (!signInData.email || !signInData.password) {
+      setSignInStatus({ type: "error", message: "Please fill in both fields." });
+      return;
+    }
+
+    if (!validateEmail(signInData.email)) {
+      setSignInStatus({ type: "error", message: "Enter a valid email address." });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/signin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signInData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setSignInStatus({ type: "error", message: data.message || "Could not sign in." });
+        return;
+      }
+
+      localStorage.setItem("cs_lab_token", data.token);
+      setSignInStatus({ type: "success", message: data.message || "Signed in successfully." });
+      setSignInData({ email: "", password: "" });
+    } catch (error) {
+      setSignInStatus({ type: "error", message: "Server error. Try again later." });
+    }
+  };
+
+  const handleSignUpSubmit = async (event) => {
+    event.preventDefault();
+    if (!signUpData.name || !signUpData.email || !signUpData.password) {
+      setSignUpStatus({ type: "error", message: "Name, email, and password are required." });
+      return;
+    }
+
+    if (!validateEmail(signUpData.email)) {
+      setSignUpStatus({ type: "error", message: "Enter a valid email address." });
+      return;
+    }
+
+    const ageNumber = Number(signUpData.age);
+    if (signUpData.age && (Number.isNaN(ageNumber) || ageNumber <= 0)) {
+      setSignUpStatus({ type: "error", message: "Age must be a positive number." });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(signUpData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setSignUpStatus({ type: "error", message: data.message || "Could not sign up." });
+        return;
+      }
+
+      localStorage.setItem("cs_lab_token", data.token);
+      setSignUpStatus({ type: "success", message: data.message || "Thanks for signing up." });
+      setSignUpData({ name: "", email: "", password: "", age: "", gender: "", country: "" });
+    } catch (error) {
+      setSignUpStatus({ type: "error", message: "Server error. Try again later." });
+    }
+  };
+
+  return (
+    <div className="page7-container">
+      <Bg style={{backgroundColor:"White"}} />
+
+      
+      <h1 className="page7-heading">Comics Studies<br />Lab@IITJ</h1>
+
+      <div className="envelope-wrapper">
+        <img src={envelopeImage} alt="Envelope with @" className="envelope-img" />
+      </div>
+
+      <div className="signin-section">
+        <form className="auth-form" onSubmit={handleSignInSubmit}>
+          <label className="auth-label" htmlFor="signin-email">
+            <span>Email</span>
+            <input
+              id="signin-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              value={signInData.email}
+              onChange={handleSignInChange}
+              className="auth-input"
+            />
+          </label>
+          <label className="auth-label" htmlFor="signin-password">
+            <span>Password</span>
+            <input
+              id="signin-password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              value={signInData.password}
+              onChange={handleSignInChange}
+              className="auth-input"
+            />
+          </label>
+          <button type="submit" className="auth-button">Sign in</button>
+          {signInStatus && (
+            <p className={`auth-feedback auth-feedback-${signInStatus.type}`}>
+              {signInStatus.message}
+            </p>
+          )}
+        </form>
+      </div>
+
+    
+      <div className="signup-section">
+        <form className="auth-form" onSubmit={handleSignUpSubmit}>
+          <label className="auth-label" htmlFor="signup-name">
+            <span>Name</span>
+            <input
+              id="signup-name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              value={signUpData.name}
+              onChange={handleSignUpChange}
+              className="auth-input"
+            />
+          </label>
+          <label className="auth-label" htmlFor="signup-email">
+            <span>Email</span>
+            <input
+              id="signup-email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              value={signUpData.email}
+              onChange={handleSignUpChange}
+              className="auth-input"
+            />
+          </label>
+          <label className="auth-label" htmlFor="signup-password">
+            <span>Password</span>
+            <input
+              id="signup-password"
+              name="password"
+              type="password"
+              autoComplete="new-password"
+              value={signUpData.password}
+              onChange={handleSignUpChange}
+              className="auth-input"
+            />
+          </label>
+          <label className="auth-label" htmlFor="signup-age">
+            <span>Age</span>
+            <input
+              id="signup-age"
+              name="age"
+              type="number"
+              min="1"
+              value={signUpData.age}
+              onChange={handleSignUpChange}
+              className="auth-input"
+            />
+          </label>
+          <label className="auth-label" htmlFor="signup-gender">
+            <span>Gender</span>
+            <input
+              id="signup-gender"
+              name="gender"
+              type="text"
+              value={signUpData.gender}
+              onChange={handleSignUpChange}
+              className="auth-input"
+            />
+          </label>
+          <label className="auth-label" htmlFor="signup-country">
+            <span>Country</span>
+            <input
+              id="signup-country"
+              name="country"
+              type="text"
+              autoComplete="country-name"
+              value={signUpData.country}
+              onChange={handleSignUpChange}
+              className="auth-input"
+            />
+          </label>
+          <button type="submit" className="auth-button">Sign up</button>
+          {signUpStatus && (
+            <p className={`auth-feedback auth-feedback-${signUpStatus.type}`}>
+              {signUpStatus.message}
+            </p>
+          )}
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default Page7;

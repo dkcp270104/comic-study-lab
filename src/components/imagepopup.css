@@ -1,0 +1,97 @@
+/* thumbnail on the page */
+.popup-thumbnail {
+  width: 180px;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.popup-thumbnail:hover {
+  transform: scale(1.05);
+}
+
+/* overlay background when popup open */
+/* overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 1;
+  transition: none;
+  backdrop-filter: none;
+}
+
+/* popup box */
+.popup-box {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90%;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+
+  transform: none;
+  opacity: 1;
+  transition: none;
+}
+
+/* image */
+.popup-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  filter: none;
+}
+
+
+.popup-text h2 {
+  margin-top: 15px;
+  font-size: 1.5rem;
+  color: rgb(48, 78, 48);
+  font-family: "Comic Neue", cursive;
+}
+
+.popup-text p {
+  font-size: 1rem;
+  color: #444;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+
+/* X (close) button */
+.close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 800;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #ff3333;
+  transform: scale(1.1);
+}
+
+/* ensure popup-box supports positioned elements */
+.popup-box {
+  position: relative;
+}
+
+
+

@@ -1,0 +1,33 @@
+.heading-container {
+  position: absolute;
+  top: 0px;
+  left: 100px;
+  opacity: 0; /* hidden at start */
+  transform: translateY(30px); /* thoda neeche se start */
+  animation: fadeUp 2.5s ease-out forwards;
+}
+
+/* Animation keyframes */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heading-line1,
+.heading-line2 {
+  font-size: 2.6rem;
+  font-weight: 500;
+  color: #ffffff;
+  font-family: "Comic Neue", cursive;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: all 0.4s ease;
+}
+

@@ -1,0 +1,94 @@
+.bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* Base for all decorative items */
+.bg-item {
+  position: absolute;
+  opacity: 0;
+  animation: smoothFadeIn 2.5s ease forwards;
+}
+
+/* Soft fade-in only (no movement) */
+@keyframes smoothFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* ---- Stars ---- */
+.star1 {
+  top: 38%;
+  left: 6%;
+  animation-delay: 0.2s;
+  width: 30px;
+}
+
+.star2 {
+  top: 75%;
+  left: 25%;
+  animation-delay: 0.5s;
+  width: 30px;
+  
+}
+
+.star3 {
+  top: 12%;
+  right: 11%;
+  animation-delay: 0.8s;
+  width: 30px;
+}
+
+.star4 {
+  top: 12%;
+  right: 9%;
+  animation-delay: 1.1s;
+  width: 30px;
+}
+
+/* ---- Leaves ---- */
+.leaf1 {
+  top: 40%;
+  right: 20%;
+  animation-delay: 1.4s;
+  width: 30px;
+}
+
+.leaf2 {
+  top: 15%;
+  right: 20%;
+  animation-delay: 1.7s;
+  width: 30px;
+}
+
+.leaf3 {
+  top: 28%;
+  left: 20%;
+  animation-delay: 2s;
+  width: 50px;
+  width: 30px;
+}
+
+/* ---- Swirls ---- */
+.swirl1 {
+  top: 5%;
+  left: 1%;
+  animation-delay: 2.3s;
+  width: 30px;
+}
+
+.swirl2 {
+  top: 40%;
+  right: 5%;
+  animation-delay: 2.6s;
+  width: 30px;
+}
