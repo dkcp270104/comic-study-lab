@@ -4,18 +4,24 @@
   left: 100px;
   opacity: 0; /* hidden at start */
   transform: translateY(30px); /* thoda neeche se start */
-  animation: fadeUp 2.5s ease-out forwards;
+  animation: fadeUp 2s ease-in-out forwards;
+  text-shadow: 0 0 12px #ffd166;
+}
+.heading-container:hover{
+  cursor:pointer;
+  text-shadow: 0 0 30px #ffd166;
+
 }
 
 /* Animation keyframes */
 @keyframes fadeUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+   
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    
   }
 }
 
