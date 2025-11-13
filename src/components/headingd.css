@@ -2,12 +2,12 @@
   position: absolute;
   top: 0px;
   left: 100px;
-  opacity: 0; 
-  transform: translateY(30px);
+  opacity: 0; /* hidden at start */
+  transform: translateY(30px); /* thoda neeche se start */
   animation: fadeUp 2.5s ease-out forwards;
 }
 
-
+/* Animation keyframes */
 @keyframes fadeUp {
   0% {
     opacity: 0;
