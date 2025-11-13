@@ -29,7 +29,7 @@ const ImagePopUp = ({ imageSrc, title, description }) => {
             className="popup-box"
             onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
           >
-            {/* ❌ Close (X) Button */}
+            {/*Close (X) Button */}
             <button className="close-btn" onClick={handleClose}>
               ✕
             </button>

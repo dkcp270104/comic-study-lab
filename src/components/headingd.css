@@ -3,7 +3,7 @@
   top: 0px;
   left: 100px;
   opacity: 0; /* hidden at start */
-  transform: translateY(30px); /* thoda neeche se start */
+  transform: translateY(30px); 
   animation: fadeUp 2.5s ease-out forwards;
 }
 
@@ -30,18 +30,17 @@
   text-align: center;
   letter-spacing: 1px;
   transition: all 0.4s ease;
+  text-shadow: 0 0 16px #ffd166;
+}
+.heading-line1:hover{
+  cursor:pointer;
+  text-shadow:0 0 40px #ffd166;
 
-  
-  animation: float 3s ease-in-out infinite;
-  animation-delay: 2.5s; /* starts after fadeUp ends */
+}
+.heading-line2:hover{
+  cursor:pointer;
+  text-shadow:0 0 40px #ffd166;
+
 }
 
-/* Keyframes for up-down motion */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px); /* moves up slightly */
-  }
-}
+
