@@ -1,3 +1,6 @@
+/* =========================
+   BUBBLE STYLES
+   ========================= */
 
 /* Base bubble style */
 .bubble {
@@ -8,11 +11,11 @@
   justify-content: center;
   align-items: center;
   transition: transform 0.3s ease;
-  
 }
+
 .bubble:hover {
-  transform: scale(1.1); /* enlarge the whole bubble */
-  z-index: 20; /* make sure it appears above others */
+  transform: scale(1.1);
+  z-index: 20;
 }
 
 .bubble img {
@@ -20,9 +23,7 @@
   height: 100%;
   object-fit: contain;
   transition: transform 0.3s ease;
-  
 }
-
 
 /* Text inside bubble */
 .bubble-text {
@@ -32,52 +33,48 @@
   cursor: pointer;
   font-size: 1.7rem;
   font-family: "Comic Sans MS", cursive;
-  animation: fadeUp 2s ease-in-out forwards; 
-
+  animation: fadeUp 2s ease-in-out forwards;
 }
-.bubble-text:hover{
+
+.bubble-text:hover {
   transform: scale(1.2);
 }
 
-
-
-/*Activity section */
+/* Activity section */
 .activity {
-  top: 1%;          /* lifted slightly higher */
+  top: 1%;
   right: 30%;
 }
 
-.activity .bubble-text{
- left:57px;
+.activity .bubble-text {
+  left: 57px;
 }
 
-.activity .bubble-text a{
+.activity .bubble-text a {
   color: white;
-  text-shadow:0 0 12px #fd166f;
-  font-weight:800;
+  text-shadow: 0 0 12px #fd166f;
+  font-weight: 800;
   text-decoration: underline;
 }
 
-
-
+/* Origin section */
 .origin {
   top: 45%;
   left: 36%;
 }
 
-.origin .bubble-text{
+.origin .bubble-text {
   top: 90px;
 }
 
 .origin .bubble-text a {
   color: #0b0f91;
   text-shadow: 0 0 12px #6497de;
-  font-weight:800;
+  font-weight: 800;
   text-decoration: underline;
 }
 
-
-
+/* Visibility section */
 .visibility {
   top: 40%;
   left: 5%;
@@ -85,53 +82,49 @@
 
 .visibility .bubble-text {
   top: 230px;
-  
 }
-.visibility .bubble-text a{
-  font-weight: 10;
-  color: #FF4500;
-  text-shadow:0 0 12px #dcc920;
+
+.visibility .bubble-text a {
   font-weight: 800;
-
+  color: #ff4500;
+  text-shadow: 0 0 12px #dcc920;
 }
 
-
+/* Creativity section */
 .creativity {
   bottom: 1%;
   right: 2%;
 }
+
 .creativity .bubble-text {
   top: 110px;
 }
-.creativity .bubble-text a{
+
+.creativity .bubble-text a {
   color: rgb(36, 104, 36);
   font-weight: 800;
-  text-shadow: 0 0 12px #009933; 
+  text-shadow: 0 0 12px #009933;
 }
 
-
-/* Container for extra icons */
-.extra-icons {
-  position: relative; /* keeps them inside same layout area */
-  width: 100%;
-  height: 100%;
-}
+/* =========================
+   STATUE SECTION
+   ========================= */
 
 .statues-container {
   position: relative;
   width: 100%;
-  height: 100vh;  /* adjust as per parent container */
+  height: 100vh;
 }
 
-/* Common statue style */
+/* Base statue style */
 .statue {
   position: absolute;
-  height: 70px;       /* size of statue */
+  height: 70px;
   object-fit: contain;
   transition: all 0.3s ease-in-out;
 }
 
-/* Individual positioning – adjust freely */
+/* Individual positioning */
 .statue1 {
   top: 33%;
   left: 68%;
@@ -146,18 +139,86 @@
   top: 75%;
   right: 75%;
 }
+
 .statue4 {
   top: 55%;
   right: 40%;
 }
 
-
+/* Hover scaling */
 .statue:hover {
   transform: scale(1.5);
 }
+
+/* === ROTATION + GLOW EFFECT FOR ALL STATUES === */
+.statue {
+  animation: rotate360 8s linear infinite,
+             glow 2.5s ease-in-out infinite alternate,
+             float 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.6));
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+/* Hover scaling + z-index boost */
+.statue:hover {
+  transform: scale(1.3);
+  z-index: 10;
+}
+
+/* Variation in timing and direction */
+.statue1 {
+  animation-duration: 8s, 2.5s, 5s;
+}
+
+.statue2 {
+  animation-duration: 10s, 2.5s, 6s;
+  animation-direction: reverse, alternate, alternate;
+}
+
+.statue3 {
+  animation-duration: 9s, 2.5s, 5.5s;
+}
+
+.statue4 {
+  animation-duration: 11s, 2.5s, 6.5s;
+  animation-direction: reverse, alternate, alternate;
+}
+
+/* 360° rotation */
+@keyframes rotate360 {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Glow pulse */
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 10px #00ffc8);
+  }
+  100% {
+    filter: drop-shadow(0 0 25px #00b3ff);
+  }
+}
+
+/* Floating motion */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateY(180deg);
+  }
+}
+
 /* =========================
-   CONTACT BAR STYLES
+   CONTACT BAR
    ========================= */
+
 .contact-bar {
   position: relative;
   background-color: rgb(64, 76, 66);
@@ -194,7 +255,7 @@
   transform: scale(1.05);
 }
 
-/* Fix for social icons section */
+/* Social icons */
 .social-icons {
   margin-top: 15px;
 }
@@ -226,7 +287,9 @@
   letter-spacing: 0.5px;
 }
 
-/* Responsive tweaks for smaller screens */
+/* =========================
+   RESPONSIVE
+   ========================= */
 @media (max-width: 600px) {
   .contact-bar {
     padding: 20px 8px;
@@ -243,5 +306,9 @@
   .social-icons a {
     font-size: 20px;
     margin: 0 6px;
+  }
+
+  .statue {
+    height: 50px;
   }
 }

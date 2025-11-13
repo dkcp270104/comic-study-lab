@@ -50,3 +50,49 @@ body{
   transform: scale(1.5);
 }
 
+/* === ROTATION + GLOW EFFECT FOR s1 (Character 1) === */
+
+.s13 {
+  animation: rotate360 8s linear infinite,
+             glow 2.5s ease-in-out infinite alternate,
+             float 5s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.7));
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+/* Hover scaling (optional for interaction) */
+.s13:hover {
+  transform: scale(1.2);
+  z-index: 10;
+}
+
+/* 360° rotation animation */
+@keyframes rotate360 {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Glow pulse animation */
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 10px #00ffc8);
+  }
+  100% {
+    filter: drop-shadow(0 0 25px #00b3ff);
+  }
+}
+
+/* Floating (hovering hologram) animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateY(180deg);
+  }
+}

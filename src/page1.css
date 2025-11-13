@@ -118,4 +118,35 @@ body {
   
 }
 
+/* --- ROTATION FOR s1 CHARACTER --- */
+.s11 {
+  animation: rotate360 8s linear infinite, glow 2.5s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.6));
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.s11:hover {
+  transform: scale(1.1);
+}
+
+/* 360° rotation animation */
+@keyframes rotate360 {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+/* Glow shimmer animation */
+@keyframes glow {
+  0% {
+    filter: drop-shadow(0 0 10px #00ffc8);
+  }
+  100% {
+    filter: drop-shadow(0 0 25px #00b3ff);
+  }
+}
 
