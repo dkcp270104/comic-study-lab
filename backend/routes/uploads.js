@@ -60,7 +60,7 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-const countWords = (text) =>
+const countWords = (text = "") =>
   text
     .trim()
     .split(/\s+/)
@@ -82,41 +82,54 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
       return res.status(403).json({ message: "Admin access required" });
     }
 
-    const { description, link } = req.body;
-    if (!description || !description.trim()) {
-      return res.status(400).json({ message: "Description is required" });
+    const description = req.body.description?.trim() || "";
+    const trimmedLink = req.body.link?.trim() || "";
+    const hasFile = Boolean(req.file);
+    const hasDescription = Boolean(description);
+    const hasLink = Boolean(trimmedLink);
+
+    if (!hasDescription && !hasLink && !hasFile) {
+      return res
+        .status(400)
+        .json({ message: "Provide at least a description, link, or file." });
     }
 
-    const trimmedLink = link?.trim();
-    if (trimmedLink) {
+    if (hasLink) {
       try {
         const parsed = new URL(trimmedLink);
         if (!["http:", "https:"].includes(parsed.protocol)) {
           return res.status(400).json({ message: "Link must start with http:// or https://" });
         }
-      } catch (_error) {
+      } catch {
         return res.status(400).json({ message: "Link must be a valid URL" });
       }
     }
 
-    if (!req.file) {
-      return res.status(400).json({ message: "File is required" });
-    }
-
-    if (countWords(description) > 1000) {
+    if (hasDescription && countWords(description) > 1000) {
       return res.status(400).json({ message: "Description cannot exceed 1000 words" });
     }
 
-    const newUpload = await Upload.create({
-      description: description.trim(),
-      link: trimmedLink || undefined,
-      fileName: req.file.filename,
-      originalName: req.file.originalname,
-      fileType: req.file.mimetype,
-      fileSize: req.file.size,
-      fileUrl: `/uploads/${req.file.filename}`,
+    const uploadPayload = {
       uploadedBy: req.userId,
-    });
+    };
+
+    if (hasDescription) {
+      uploadPayload.description = description;
+    }
+
+    if (hasLink) {
+      uploadPayload.link = trimmedLink;
+    }
+
+    if (hasFile) {
+      uploadPayload.fileName = req.file.filename;
+      uploadPayload.originalName = req.file.originalname;
+      uploadPayload.fileType = req.file.mimetype;
+      uploadPayload.fileSize = req.file.size;
+      uploadPayload.fileUrl = `/uploads/${req.file.filename}`;
+    }
+
+    const newUpload = await Upload.create(uploadPayload);
 
     res.status(201).json(newUpload);
   } catch (error) {
@@ -139,8 +152,8 @@ router.delete("/:id", authenticate, async (req, res) => {
     }
 
     // Delete the physical file
-    const filePath = path.join(uploadDir, upload.fileName);
-    if (fs.existsSync(filePath)) {
+    const filePath = upload.fileName ? path.join(uploadDir, upload.fileName) : null;
+    if (filePath && fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
     }
 

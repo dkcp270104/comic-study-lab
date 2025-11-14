@@ -4,7 +4,6 @@ const uploadSchema = new mongoose.Schema(
   {
     description: {
       type: String,
-      required: true,
       trim: true,
       maxlength: 10000,
     },
@@ -14,23 +13,18 @@ const uploadSchema = new mongoose.Schema(
     },
     fileName: {
       type: String,
-      required: true,
     },
     originalName: {
       type: String,
-      required: true,
     },
     fileType: {
       type: String,
-      required: true,
     },
     fileSize: {
       type: Number,
-      required: true,
     },
     fileUrl: {
       type: String,
-      required: true,
     },
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,

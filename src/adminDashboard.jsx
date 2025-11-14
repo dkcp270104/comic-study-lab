@@ -5,7 +5,7 @@ import "./adminDashboard.css";
 
 const MAX_WORDS = 1000;
 
-const countWords = (text) =>
+const countWords = (text = "") =>
   text
     .trim()
     .split(/\s+/)
@@ -14,13 +14,13 @@ const countWords = (text) =>
 const buildFileUrl = (baseUrl, relativeUrl) => {
   try {
     return new URL(relativeUrl, baseUrl).href;
-  } catch (_error) {
+  } catch {
     return `${baseUrl.replace(/\/$/, "")}${relativeUrl}`;
   }
 };
 
 const formatFileSize = (bytes) => {
-  if (Number.isNaN(bytes)) {
+  if (bytes == null || Number.isNaN(bytes)) {
     return "-";
   }
   if (bytes < 1024) {
@@ -51,7 +51,7 @@ function AdminDashboard() {
     }
     try {
       return JSON.parse(stored);
-    } catch (error) {
+    } catch {
       localStorage.removeItem("cs_lab_user");
       return null;
     }
@@ -132,7 +132,7 @@ function AdminDashboard() {
     try {
       const parsed = new URL(value);
       return ["http:", "https:"].includes(parsed.protocol);
-    } catch (_error) {
+    } catch {
       return false;
     }
   };
@@ -150,18 +150,22 @@ function AdminDashboard() {
       return;
     }
 
-    if (!file) {
-      setStatus({ type: "error", message: "Please choose a file to upload." });
+    const trimmedDescription = description.trim();
+    const trimmedLink = link.trim();
+    const hasFile = Boolean(file);
+    const hasDescription = Boolean(trimmedDescription);
+    const hasLink = Boolean(trimmedLink);
+
+    if (!hasDescription && !hasLink && !hasFile) {
+      setStatus({
+        type: "error",
+        message: "Add a description, link, file, or any combination before posting.",
+      });
       return;
     }
 
-    const words = countWords(description);
-    if (!description.trim()) {
-      setStatus({ type: "error", message: "A description is required." });
-      return;
-    }
-
-    if (words > MAX_WORDS) {
+    const words = countWords(trimmedDescription);
+    if (hasDescription && words > MAX_WORDS) {
       setStatus({
         type: "error",
         message: `Description exceeds ${MAX_WORDS} words. Please shorten it.`,
@@ -169,8 +173,7 @@ function AdminDashboard() {
       return;
     }
 
-    const trimmedLink = link.trim();
-    if (trimmedLink && !isValidUrl(trimmedLink)) {
+    if (hasLink && !isValidUrl(trimmedLink)) {
       setStatus({
         type: "error",
         message: "Please enter a valid URL (include http:// or https://).",
@@ -179,9 +182,13 @@ function AdminDashboard() {
     }
 
     const formData = new FormData();
-    formData.append("description", description.trim());
-    formData.append("file", file);
-    if (trimmedLink) {
+    if (hasDescription) {
+      formData.append("description", trimmedDescription);
+    }
+    if (hasFile) {
+      formData.append("file", file);
+    }
+    if (hasLink) {
       formData.append("link", trimmedLink);
     }
 
@@ -212,10 +219,10 @@ function AdminDashboard() {
         throw new Error(data.message || "Upload failed. Please try again.");
       }
 
-      setUploads((prev) => [data, ...prev]);
-      setDescription("");
-      setFile(null);
-      setLink("");
+    setUploads((prev) => [data, ...prev]);
+    setDescription("");
+    setFile(null);
+    setLink("");
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -225,7 +232,7 @@ function AdminDashboard() {
     }
   };
 
-  const currentWordCount = countWords(description || "");
+  const currentWordCount = countWords(description);
 
   const handleLogout = () => {
     localStorage.removeItem("cs_lab_token");
@@ -234,11 +241,20 @@ function AdminDashboard() {
   };
 
   const handleOpen = (upload) => {
+    if (!upload.fileUrl) {
+      setStatus({ type: "error", message: "This post does not include a file to view." });
+      return;
+    }
     const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
     window.open(fileUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleDownload = async (upload) => {
+    if (!upload.fileUrl) {
+      setStatus({ type: "error", message: "This post does not include a file to download." });
+      return;
+    }
+
     const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
 
     try {
@@ -299,6 +315,10 @@ function AdminDashboard() {
   };
 
   const renderPreview = (upload) => {
+    if (!upload.fileUrl || !upload.fileType) {
+      return <div className="upload-preview-placeholder">No file uploaded</div>;
+    }
+
     const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
     if (upload.fileType.startsWith("image/")) {
       return <img src={fileUrl} alt={upload.originalName} className="upload-preview-image" />;
@@ -334,28 +354,30 @@ function AdminDashboard() {
 
     return (
       <a href={fileUrl} className="upload-preview-link" target="_blank" rel="noreferrer">
-        Open {upload.originalName}
+        Open {upload.originalName || "file"}
       </a>
     );
   };
 
   const renderActions = (upload) => (
-    <div className="upload-actions">
-      <button
-        type="button"
-        className="upload-action-button"
-        onClick={() => handleOpen(upload)}
-      >
-        View
-      </button>
-      <button
-        type="button"
-        className="upload-action-button"
-        onClick={() => handleDownload(upload)}
-      >
-        Download
-      </button>
-    </div>
+    upload.fileUrl ? (
+      <div className="upload-actions">
+        <button
+          type="button"
+          className="upload-action-button"
+          onClick={() => handleOpen(upload)}
+        >
+          View
+        </button>
+        <button
+          type="button"
+          className="upload-action-button"
+          onClick={() => handleDownload(upload)}
+        >
+          Download
+        </button>
+      </div>
+    ) : null
   );
 
   return (
@@ -374,7 +396,7 @@ function AdminDashboard() {
           <h2>New Post</h2>
           <form className="upload-form" onSubmit={handleSubmit}>
             <label className="upload-label" htmlFor="upload-description">
-              <span>Description</span>
+              <span>Description (optional)</span>
               <textarea
                 id="upload-description"
                 name="description"
@@ -389,7 +411,7 @@ function AdminDashboard() {
               {currentWordCount}/{MAX_WORDS} words
             </div>
             <label className="upload-label" htmlFor="upload-link">
-              <span>Link</span>
+              <span>External link (optional)</span>
               <input
                 id="upload-link"
                 name="link"
@@ -400,12 +422,13 @@ function AdminDashboard() {
               />
             </label>
             <label className="upload-label" htmlFor="upload-file">
-              <span>File</span>
+              <span>File upload (optional)</span>
               <input
                 id="upload-file"
                 name="file"
                 type="file"
                 ref={fileInputRef}
+                accept="image/*,video/*,audio/*,application/pdf"
                 onChange={handleFileChange}
               />
             </label>
@@ -432,8 +455,10 @@ function AdminDashboard() {
                 <article key={upload._id} className="upload-card">
                   <div className="upload-preview">{renderPreview(upload)}</div>
                   <div className="upload-meta">
-                    <h3>{upload.originalName}</h3>
-                    <p className="upload-description">{upload.description}</p>
+                    <h3>{upload.originalName || upload.description || "Untitled post"}</h3>
+                    <p className="upload-description">
+                      {upload.description || "No description provided."}
+                    </p>
                     {upload.link && (
                       <a
                         href={upload.link}

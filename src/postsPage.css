@@ -99,6 +99,13 @@
   min-height: 160px;
 }
 
+.post-preview-placeholder {
+  font-size: 0.95rem;
+  color: rgba(59, 74, 55, 0.7);
+  padding: 1.5rem;
+  text-align: center;
+}
+
 .post-preview-image {
   width: 100%;
   height: auto;

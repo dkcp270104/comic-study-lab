@@ -6,13 +6,13 @@ import "./postsPage.css";
 const buildFileUrl = (baseUrl, relativeUrl) => {
   try {
     return new URL(relativeUrl, baseUrl).href;
-  } catch (_error) {
+  } catch {
     return `${baseUrl.replace(/\/$/, "")}${relativeUrl}`;
   }
 };
 
 const formatFileSize = (bytes) => {
-  if (Number.isNaN(bytes)) {
+  if (bytes == null || Number.isNaN(bytes)) {
     return "-";
   }
   if (bytes < 1024) {
@@ -39,7 +39,7 @@ function PostsPage() {
     }
     try {
       return JSON.parse(stored);
-    } catch (_error) {
+    } catch {
       localStorage.removeItem("cs_lab_user");
       return null;
     }
@@ -52,11 +52,20 @@ function PostsPage() {
   };
 
   const handleOpen = (upload) => {
+    if (!upload.fileUrl) {
+      setStatus({ type: "error", message: "This post does not include a file to view." });
+      return;
+    }
     const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
     window.open(fileUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleDownload = async (upload) => {
+    if (!upload.fileUrl) {
+      setStatus({ type: "error", message: "This post does not include a file to download." });
+      return;
+    }
+
     const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
 
     try {
@@ -141,6 +150,10 @@ function PostsPage() {
   }, [API_URL, navigate, token, user]);
 
   const renderPreview = (upload) => {
+    if (!upload.fileUrl || !upload.fileType) {
+      return <div className="post-preview-placeholder">No file uploaded</div>;
+    }
+
     const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
 
     if (upload.fileType.startsWith("image/")) {
@@ -171,28 +184,30 @@ function PostsPage() {
 
     return (
       <a href={fileUrl} className="post-preview-link" target="_blank" rel="noreferrer">
-        Open {upload.originalName}
+        Open {upload.originalName || "file"}
       </a>
     );
   };
 
   const renderActions = (upload) => (
-    <div className="post-actions">
-      <button
-        type="button"
-        className="post-action-button"
-        onClick={() => handleOpen(upload)}
-      >
-        View
-      </button>
-      <button
-        type="button"
-        className="post-action-button"
-        onClick={() => handleDownload(upload)}
-      >
-        Download
-      </button>
-    </div>
+    upload.fileUrl ? (
+      <div className="post-actions">
+        <button
+          type="button"
+          className="post-action-button"
+          onClick={() => handleOpen(upload)}
+        >
+          View
+        </button>
+        <button
+          type="button"
+          className="post-action-button"
+          onClick={() => handleDownload(upload)}
+        >
+          Download
+        </button>
+      </div>
+    ) : null
   );
 
   return (
@@ -221,8 +236,10 @@ function PostsPage() {
               <article key={upload._id} className="post-card">
                 <div className="post-preview">{renderPreview(upload)}</div>
                 <div className="post-meta">
-                  <h3>{upload.originalName}</h3>
-                  <p className="post-description">{upload.description}</p>
+                  <h3>{upload.originalName || upload.description || "Untitled post"}</h3>
+                  <p className="post-description">
+                    {upload.description || "No description provided."}
+                  </p>
                   {upload.link && (
                     <a
                       href={upload.link}
