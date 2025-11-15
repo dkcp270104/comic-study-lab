@@ -45,7 +45,7 @@ import Artist23 from "./assets/Artist23.png";
 import Artist24 from "./assets/Artist24.png";
 import Artist25 from "./assets/Artist25.png";
 
-// ✅ Faculty data (same as before)
+
 const facultyData = [
   { img: p1, name: "Anuj Pal Kapoor", link: "https://www.iitj.ac.in/People/Profile/3046eafb-3221-44c9-a527-3e5ea1795659", domain: "" },
   { img: p2, name: "Ashish Pathak", link: "https://www.iitj.ac.in/People/Profile/ff0be18d-bc39-49b8-b01c-eb8627ef7a98", domain: "" },
@@ -63,7 +63,6 @@ const facultyData = [
   { img: p14, name: "Tonisha Guin", link: "https://www.iitj.ac.in/People/Profile/f67cd3f4-1f9c-4e00-b460-57e0f1752ae5", domain: "" },
 ];
 
-// ✅ Artist data (only names where provided)
 const artistData = [
   { img: Artist1, name: "Aaron Kashtan", link: "https://writing.charlotte.edu/people/aaron-kashtan/" },
   { img: Artist2, name: "Dr Ann Miller", link: "https://le.ac.uk/people/ann-miller" },
